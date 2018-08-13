@@ -110,6 +110,23 @@ DEFAULTS = {
             'destroy',
         ],
         'cleanup_sequence': ['cleanup'],
+        'converge_sequence': [
+            'dependency',
+            'create',
+            'prepare',
+            'converge',
+        ],
+        'create_sequence': [
+            'dependency',
+            'create',
+            'prepare',
+        ],
+        'destroy_sequence': [
+            'dependency',
+            'cleanup',
+            'destroy',
+        ],
+        'cleanup_sequence': ['cleanup'],
         'converge_sequence': ['dependency', 'create', 'prepare', 'converge'],
         'create_sequence': ['dependency', 'create', 'prepare'],
         'destroy_sequence': ['dependency', 'cleanup', 'destroy'],
@@ -383,7 +400,8 @@ class Config(object):
         :return: dict
         """
         defaults = self._get_defaults()
-        if self.molecule_base_file is not None and os.path.exists(self.molecule_base_file):
+        if (self.molecule_base_file is not None
+                and os.path.exists(self.molecule_base_file)):
             with util.open_file(self.molecule_base_file) as stream:
                 s = stream.read()
                 self._preflight(s)
