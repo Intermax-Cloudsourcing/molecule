@@ -73,12 +73,7 @@ DEFAULTS = {
         'connection_options': {},
         'options': {},
         'env': {},
-        'inventory': {
-            'hosts': {},
-            'host_vars': {},
-            'group_vars': {},
-            'links': {},
-        },
+        'inventory': {'hosts': {}, 'host_vars': {}, 'group_vars': {}, 'links': {}},
         'children': {},
         'playbooks': {
             'cleanup': 'cleanup.yml',
@@ -89,12 +84,7 @@ DEFAULTS = {
             'side_effect': 'side_effect.yml',
             'verify': 'verify.yml',
         },
-        'lint': {
-            'name': 'ansible-lint',
-            'enabled': True,
-            'options': {},
-            'env': {},
-        },
+        'lint': {'name': 'ansible-lint', 'enabled': True, 'options': {}, 'env': {}},
     },
     'scenario': {
         'name': 'default',
@@ -106,23 +96,6 @@ DEFAULTS = {
             'prepare',
             'converge',
             'check',
-            'cleanup',
-            'destroy',
-        ],
-        'cleanup_sequence': ['cleanup'],
-        'converge_sequence': [
-            'dependency',
-            'create',
-            'prepare',
-            'converge',
-        ],
-        'create_sequence': [
-            'dependency',
-            'create',
-            'prepare',
-        ],
-        'destroy_sequence': [
-            'dependency',
             'cleanup',
             'destroy',
         ],
@@ -400,8 +373,9 @@ class Config(object):
         :return: dict
         """
         defaults = self._get_defaults()
-        if (self.molecule_base_file is not None
-                and os.path.exists(self.molecule_base_file)):
+        if self.molecule_base_file is not None and os.path.exists(
+            self.molecule_base_file
+        ):
             with util.open_file(self.molecule_base_file) as stream:
                 s = stream.read()
                 self._preflight(s)
@@ -435,8 +409,9 @@ class Config(object):
             util.sysexit_with_message(msg)
 
     def _get_defaults(self):
-        scenario_name = (os.path.basename(os.path.dirname(self.molecule_file))
-                         or 'default')
+        scenario_name = (
+            os.path.basename(os.path.dirname(self.molecule_file)) or 'default'
+        )
         defaults = DEFAULTS.copy()
         defaults['scenario']['name'] = scenario_name
         return defaults
