@@ -334,6 +334,30 @@ def test_interpolate(patched_logger_critical, config_instance):
 
     assert x == config_instance._interpolate(string, os.environ, None)
 
+    string = 'foo: ${HOME}'
+
+    assert x == config_instance._interpolate(string, os.environ, None)
+
+def test_interpolate_default(patched_logger_critical, config_instance):
+    string = 'foo: ${NONE:-default}'
+    x = 'foo: default'
+
+    assert x == config_instance._interpolate(string, os.environ, None)
+
+    string = 'foo: ${NONE-default}'
+
+    assert x == config_instance._interpolate(string, os.environ, None)
+
+
+def test_interpolate_default_variable(patched_logger_critical, config_instance):
+    string = 'foo: ${NONE:-$HOME}'
+    x = 'foo: {}'.format(os.environ['HOME'])
+
+    assert x == config_instance._interpolate(string, os.environ, None)
+
+    string = 'foo: ${NONE-$HOME}'
+
+    assert x == config_instance._interpolate(string, os.environ, None)
 
 def test_interpolate_raises_on_failed_interpolation(
     patched_logger_critical, config_instance
