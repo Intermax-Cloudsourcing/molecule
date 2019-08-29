@@ -29,6 +29,10 @@ Unreleased
 * Introduces new `molecule_base_file` variable within the playbooks and environment variable `MOLECULE_BASE_FILE`
   pointing to the base file location.
 * Add base file values to molecule_yml variable
+* ANSIBLE_ROLES_PATH, ANSIBLE_LIBRARY, ANSIBLE_FILTER_PLUGINS now include the default Ansible lookup paths
+  ``/usr/share/ansible/<roles/filter/modules>`` and ``/etc/ansible/roles``
+* The internal Molecule plugins are moved to paths more like upstream.
+  ``ansible/plugins/filters`` > ``ansible/plugins/filter`` and ``ansible/plugins/libraries`` > ``ansible/plugins/modules``
 
 2.20
 ====
