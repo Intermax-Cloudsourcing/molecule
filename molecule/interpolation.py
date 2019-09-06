@@ -93,13 +93,13 @@ class TemplateWithDefaults(string.Template):
                     var, _, default = named.partition(':-')
                     # If default is also a variable
                     if default.startswith('$'):
-                      default = mapping.get(default[1:], '')
+                        default = mapping.get(default[1:], '')
                     return mapping.get(var) or default
                 if '-' in named:
                     var, _, default = named.partition('-')
                     # If default is also a variable
                     if default.startswith('$'):
-                      default = mapping.get(default[1:], '')
+                        default = mapping.get(default[1:], '')
                     return mapping.get(var, default)
                 val = mapping.get(named, '')
                 return '%s' % (val,)
